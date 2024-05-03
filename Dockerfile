@@ -1,11 +1,14 @@
-# Use an appropriate base image with a JRE installed
-FROM openjdk:11-jre-slim
+# Use a base image with JRE (Java Runtime Environment) pre-installed
+FROM openjdk:latest
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the JAR file from the local filesystem into the container at /app
-COPY target/Breadcrumbsbuild-jar-file-inside-docker-container.jar /var/lib/jenkins/workspace/jar docker pipeline
+# Copy the packaged JAR file from the host to the container
+COPY target/Breadcrumbsbuild-jar-file-inside-docker-container.jar /app/
 
-# Specify the command to run your application
-CMD ["java", "-jar", "your-application.jar"]
+# Expose the port your application listens on
+EXPOSE 8081
+
+# Command to run your application when the container starts
+CMD ["java", "-jar", "Breadcrumbsbuild-jar-file-inside-docker-container.jar"]
